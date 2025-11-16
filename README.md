@@ -3,7 +3,8 @@
 A client-side web tool designed for plant biologists to streamline the process of preparing agroinfiltration buffers and generating printable experimental data sheets. This calculator handles complex calculations for multiple buffer components, Agrobacterium cultures, and post-incubation additives, saving valuable time and reducing the potential for manual errors.
 
  
-<img width="1453" height="987" alt="image" src="https://github.com/user-attachments/assets/bce3da6a-660b-4e4a-9813-f20139e777f2" />
+<img width="1402" height="980" alt="image" src="https://github.com/user-attachments/assets/df7bdaa0-1f5c-4f5c-950b-86f92621aafc" />
+
 
 
 ---
