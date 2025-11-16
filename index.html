@@ -97,18 +97,20 @@
 <body>
 
     <div class="container my-5">
-        <div class="d-flex justify-content-between align-items-center mb-4 no-print">
-            <img src="mcdonald_nandi_logo.png" alt="Lab Logo" style="height: 60px;">
-            <div class="text-center flex-grow-1">
-                <h1 class="display-5">Agroinfiltration Buffer Calculator v1.0</h1>
+        <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-center mb-4 no-print">
+            <!-- Changed mcdonald_nandi_logo.png to your new logo filename -->
+            <img src="logo.png" alt="Lab Logo" class="mb-3 mb-md-0" style="height: 80px;"> 
+            <div class="text-center flex-md-grow-1">
+                <!-- Made h1 smaller on mobile with responsive font size class -->
+                <h1 class="display-6 display-md-5">Agroinfiltration Buffer Calculator v1.0</h1>
                 <p class="lead mb-0">Generate a printable experimental data sheet for your infiltration experiments.</p>
             </div>
-            <div style="width: 60px;"></div>
+            <!-- Removed the inflexible spacer div -->
         </div>
 
 
         <div class="alert alert-info no-print">
-            <strong>Protocol:</strong> Prepare the infiltration buffer and adjust pH. Add the required volume of Agrobacterium culture to the buffer. Incubate for 1-2 hours in the dark. Immediately before infiltration, combine the solutions based on number of constructs. Finally, add the pre-infiltration additives, mix well and perform vacuum/syringe infiltration.
+            <strong>Protocol:</strong> Prepare the infiltration buffer and adjust pH. Add the required volume of Agrobacterium culture to the buffer. Incubate for 1-2 hours in the dark. Immediately before infiltration, combine the buffer/buffer's based on number of constructs. Finally, add the pre-infiltration additives, mix well and perform vacuum/syringe infiltration.
         </div>
 
         <!-- Main Calculator Form -->
@@ -377,10 +379,40 @@
         function addPreInfiltrationComponent(name = '', value = '', unit = 'v/v', stock = '100', stockUnit = 'mM') {
             const list = document.getElementById('pre-infiltration-list');
             const div = document.createElement('div');
-            div.className = 'pre-infiltration-row mb-2';
-            div.innerHTML = `<div class="input-group"><input type="text" class="form-control" placeholder="Additive Name" value="${name}"><input type="number" class="form-control" placeholder="Value" value="${value}"><select class="form-select" onchange="toggleAdditiveInput(this)"><option value="v/v" ${unit === 'v/v' ? 'selected' : ''}>v/v %</option><option value="w/v" ${unit === 'w/v' ? 'selected' : ''}>w/v %</option><option value="mM" ${unit === 'mM' ? 'selected' : ''}>mM</option></select><button class="btn btn-outline-danger btn-sm" onclick="this.closest('.pre-infiltration-row').remove()">X</button></div><div class="input-group mt-1 stock-input" style="${unit === 'mM' ? 'display:flex;' : 'display:none;'}"><span class="input-group-text">Stock Conc.</span><input type="number" class="form-control" placeholder="Stock Value" value="${stock}"><span class="input-group-text">${stockUnit}</span></div>`;
+            div.className = 'pre-infiltration-row mb-3'; // Add more bottom margin
+            div.innerHTML = `
+                <div class="row g-2 align-items-end">
+                    <div class="col-sm">
+                        <label class="form-label small">Additive</label>
+                        <input type="text" class="form-control" placeholder="Additive Name" value="${name}">
+                    </div>
+                    <div class="col-5 col-sm-3">
+                        <label class="form-label small">Value</label>
+                        <input type="number" class="form-control" placeholder="Value" value="${value}">
+                    </div>
+                    <div class="col-5 col-sm-3">
+                        <label class="form-label small">Unit</label>
+                        <select class="form-select" onchange="toggleAdditiveInput(this)">
+                            <option value="v/v" ${unit === 'v/v' ? 'selected' : ''}>v/v %</option>
+                            <option value="w/v" ${unit === 'w/v' ? 'selected' : ''}>w/v %</option>
+                            <option value="mM" ${unit === 'mM' ? 'selected' : ''}>mM</option>
+                        </select>
+                    </div>
+                    <div class="col-2 col-sm-auto">
+                        <button class="btn btn-outline-danger" onclick="this.closest('.pre-infiltration-row').remove()">X</button>
+                    </div>
+                </div>
+                <div class="row g-2 mt-2 stock-input" style="${unit === 'mM' ? '' : 'display:none;'}">
+                    <div class="col-sm-8 col-md-6">
+                        <label class="form-label small">Stock Conc.</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" placeholder="Stock Value" value="${stock}">
+                            <span class="input-group-text">${stockUnit}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
             list.appendChild(div);
-            toggleAdditiveInput(div.querySelector('select'));
         }
 
         function toggleAdditiveInput(selectElement) {
@@ -393,8 +425,25 @@
         function addConstruct(name = '', targetOD = 0.5, stockOD = '') {
             const list = document.getElementById('constructs-list');
             const div = document.createElement('div');
-            div.className = 'input-group mb-2 construct-row';
-            div.innerHTML = `<span class="input-group-text">Name</span><input type="text" class="form-control" placeholder="Construct Name" value="${name}"><span class="input-group-text">Target OD</span><input type="number" class="form-control" placeholder="Target OD600" value="${targetOD}"><span class="input-group-text">Stock OD</span><input type="number" class="form-control" placeholder="Stock OD600" value="${stockOD}"><button class="btn btn-outline-danger btn-sm" onclick="this.parentElement.remove()">X</button>`;
+            // We use Bootstrap's grid row instead of an input-group
+            div.className = 'construct-row row g-2 mb-3 align-items-end'; 
+            div.innerHTML = `
+                <div class="col-12 col-sm">
+                    <label class="form-label small">Name</label>
+                    <input type="text" class="form-control" placeholder="Construct Name" value="${name}">
+                </div>
+                <div class="col-6 col-sm">
+                    <label class="form-label small">Target OD</label>
+                    <input type="number" class="form-control" placeholder="e.g., 0.5" value="${targetOD}" step="0.1">
+                </div>
+                <div class="col-6 col-sm">
+                    <label class="form-label small">Stock OD</label>
+                    <input type="number" class="form-control" placeholder="e.g., 2.0" value="${stockOD}" step="0.1">
+                </div>
+                <div class="col-12 col-sm-auto">
+                    <button class="btn btn-outline-danger w-100" onclick="this.closest('.construct-row').remove()">X</button>
+                </div>
+            `;
             list.appendChild(div);
         }
         
