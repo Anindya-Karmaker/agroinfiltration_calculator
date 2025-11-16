@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agro-Infiltration Buffer Calculator v1.0</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1400px; /* Increased width for better layout */
+        }
+
+        .card-header {
+            background-color: #00796b;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn-custom {
+            background-color: #00796b;
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background-color: #004d40;
+            color: white;
+        }
+        
+        .component-row .input-group input[type="number"] {
+            min-width: 100px;
+        }
+        .component-row .form-control,
+        .component-row .input-group-text,
+        .component-row .form-select {
+            font-size: 0.9rem;
+        }
+        
+        .component-row .form-control {
+            text-align: right;
+        }
+
+        .summary-header {
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 0.75rem 1rem;
+            background-color: #e0f2f1;
+            border-radius: 0.25rem;
+        }
+        
+        .utility-link { 
+            font-size: 0.8rem; 
+            cursor: pointer; 
+        }
+
+        /* Print-specific styles */
+        @media print {
+            body {
+                background-color: white;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .card {
+                border: none;
+                box-shadow: none;
+            }
+
+            #results-card {
+                display: block !important;
+            }
+            
+            #results-output {
+                max-height: none !important;
+                overflow-y: visible !important;
+            }
+
+            a[href]:after {
+                content: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container my-5">
+        <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+            <img src="mcdonald_nandi_logo.png" alt="Lab Logo" style="height: 60px;">
+            <div class="text-center flex-grow-1">
+                <h1 class="display-5">Agroinfiltration Buffer Calculator v1.0</h1>
+                <p class="lead mb-0">Generate a printable experimental data sheet for your infiltration experiments.</p>
+            </div>
+            <div style="width: 60px;"></div>
+        </div>
+
+
+        <div class="alert alert-info no-print">
+            <strong>Protocol:</strong> Prepare the infiltration buffer and adjust pH. Add the required volume of Agrobacterium culture to the buffer. Incubate for 1-2 hours in the dark. Immediately before infiltration, combine the buffer/buffer's based on number of constructs. Finally, add the pre-infiltration additives, mix well and perform vacuum/syringe infiltration.
+        </div>
+
+        <!-- Main Calculator Form -->
+        <div class="row g-4">
+            <!-- Left Column: All Inputs -->
+            <div class="col-lg-7 no-print">
+                <!-- Global Parameters Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">Step 1: Global Parameters</div>
+                    <div class="card-body">
+                        <label for="totalVolume" class="form-label">Total Final Volume (for all constructs)</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="totalVolume" value="2">
+                            <select class="form-select flex-grow-0 w-auto" id="totalVolumeUnit">
+                                <option value="L" selected>L</option>
+                                <option value="mL">mL</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buffer Components Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">Step 2: Infiltration Buffer Components</div>
+                    <div class="card-body" id="buffer-components-list">
+                        <!-- Dynamic buffer components will be added here -->
+                    </div>
+                    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                        <a class="utility-link" data-bs-toggle="modal" data-bs-target="#stockCalculatorModal">Need to make a stock solution?</a>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="addBufferComponent()">+ Add Buffer Component</button>
+                    </div>
+                </div>
+
+                <!-- pH Adjustment Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">Step 3: pH Adjustment</div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="targetPh" class="form-label">Target pH</label>
+                            <input type="number" class="form-control" id="targetPh" value="5.6" step="0.1">
+                        </div>
+                        <hr>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="acidName" class="form-label">Acid for Adjustment</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="acidName" value="HCl">
+                                    <input type="number" class="form-control" id="acidStock" value="1">
+                                    <span class="input-group-text">M</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="baseName" class="form-label">Base for Adjustment</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="baseName" value="KOH">
+                                    <input type="number" class="form-control" id="baseStock" value="1">
+                                    <span class="input-group-text">M</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Pre-Infiltration Additives Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">Step 4: Pre-Infiltration Additives</div>
+                    <div class="card-body" id="pre-infiltration-list">
+                        <!-- Dynamic additives like Silwet will be added here -->
+                    </div>
+                    <div class="card-footer bg-white text-center">
+                        <button class="btn btn-sm btn-outline-secondary" onclick="addPreInfiltrationComponent()">+ Add Additive</button>
+                    </div>
+                </div>
+
+                 <!-- Constructs Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">Step 5: Agrobacterium Constructs</div>
+                    <div class="card-body" id="constructs-list">
+                        <!-- Dynamic constructs will be added here -->
+                    </div>
+                    <div class="card-footer bg-white text-center">
+                        <button class="btn btn-sm btn-outline-secondary" onclick="addConstruct()">+ Add Construct</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Actions & Results -->
+            <div class="col-lg-5">
+                <!-- MODIFIED: Actions Card moved here -->
+                <div class="card shadow-sm mb-4 no-print">
+                    <div class="card-header">Generate & Manage</div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-custom btn-lg" onclick="calculate()">Generate Experimental Data Sheet</button>
+                            <hr>
+                            <div class="btn-group">
+                                <button class="btn btn-secondary" onclick="saveParamsToCSV()">Save Parameters</button>
+                                <label class="btn btn-secondary">
+                                    Load Parameters <input type="file" id="csv-upload" accept=".csv" onchange="loadParamsFromCSV(event)" hidden>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODIFIED: Added placeholder for results -->
+                <div id="results-placeholder" class="no-print">
+                    <div class="alert alert-success text-center">
+                        <h5 class="alert-heading">Ready to Calculate?</h5>
+                        <p class="mb-0">Click <strong>Generate Experimental Data Sheet</strong> to view your protocol here. Use 'Save Parameters' to export your current setup, or 'Load Parameters' to import a previously saved configuration.</p>
+                    </div>
+                </div>
+
+                <!-- Results Card (initially hidden) -->
+                <div class="card shadow-sm sticky-top" id="results-card" style="display: none; top: 1rem;">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Experimental Data Sheet</span>
+                        <span id="batch-date" class="fs-6 fw-normal"></span>
+                    </div>
+                    <div class="card-body">
+                        <div id="results-output" class="table-responsive" style="max-height: 80vh; overflow-y: auto; padding-right: 10px;">
+                            <!-- Results table will be injected here -->
+                        </div>
+                        <div class="text-center mt-4 no-print">
+                            <button class="btn btn-success" onclick="window.print()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                                    <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm5 8H6a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+                                    <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                                </svg>
+                                Print Data Sheet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stock Solution Calculator Modal -->
+    <div class="modal fade" id="stockCalculatorModal" tabindex="-1" aria-labelledby="stockCalculatorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="stockCalculatorModalLabel">Stock Solution Calculator</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Component Name</span>
+                        <input type="text" class="form-control" id="mw-component-name" placeholder="e.g., MES Monohydrate">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Molecular Weight</span>
+                        <input type="number" class="form-control" id="mw-value" placeholder="e.g., 213.2">
+                        <span class="input-group-text">g/mol</span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Target Concentration</span>
+                        <input type="number" class="form-control" id="mw-target-conc" placeholder="e.g., 500">
+                        <select class="form-select flex-grow-0 w-auto" id="mw-target-conc-unit">
+                            <option value="mM" selected>mM</option>
+                            <option value="M">M</option>
+                            <option value="uM">µM</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Final Volume</span>
+                        <input type="number" class="form-control" id="mw-final-vol" placeholder="e.g., 250">
+                         <select class="form-select flex-grow-0 w-auto" id="mw-final-vol-unit">
+                            <option value="mL" selected>mL</option>
+                            <option value="L">L</option>
+                        </select>
+                    </div>
+                    <div id="stock-calculator-result" class="alert alert-success mt-3" style="display: none;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="calculateMass()">Calculate Mass</button>
+                    <button type="button" class="btn btn-success" id="add-from-modal-btn" onclick="addComponentFromModal()" disabled>Add to Buffer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="container text-center text-muted mt-5 mb-3 no-print">
+        <hr>
+        <p class="small">
+            <strong>Developed by:</strong> Anindya Karmaker, PhD Candidate, McDonald-Nandi Lab.<br>
+            <strong>Funding:</strong> The development of this tool was supported by the National Science Foundation Partnerships for Innovation (PFI) program under Grant No. 2016563.<br>
+            <strong>License:</strong> All rights reserved. Unauthorized copy or distribution of this application is strictly prohibited.<br>
+            <strong>Data Privacy:</strong> This is a client-side tool. No data is uploaded to, saved on, or transmitted to any server.<br>
+            <strong>Disclaimer:</strong> This tool is for research and planning purposes only. The user is solely responsible for verifying all calculations and results before use.
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            addBufferComponent('Acetosyringone', 100, 'mM', 150, 'uM');
+            addBufferComponent('MgCl₂·6H₂O', 1, 'M', 10, 'mM');
+            addBufferComponent('MES Monohydrate', 500, 'mM', 10, 'mM');
+            addPreInfiltrationComponent('Silwet L-77', 0.01, 'v/v');
+            addConstruct('Construct 1', 0.5, 2.0); 
+            addConstruct('Construct 2', 0.5, 2.0);
+            document.querySelectorAll('#stockCalculatorModal input, #stockCalculatorModal select').forEach(element => {
+                element.addEventListener('input', () => {
+                    document.getElementById('add-from-modal-btn').disabled = true;
+                    document.getElementById('stock-calculator-result').style.display = 'none';
+                });
+            });
+        });
+
+
+        function createUnitSelector(id, selectedUnit) {
+            const units = ['M', 'mM', 'uM'];
+            let options = '';
+            units.forEach(unit => {
+                options += `<option value="${unit}" ${unit === selectedUnit ? 'selected' : ''}>${unit === 'uM' ? 'µM' : unit}</option>`;
+            });
+            return `<select class="form-select flex-grow-0 w-auto">${options}</select>`;
+        }
+
+        // MODIFIED: In-line delete button layout
+        function addBufferComponent(name = '', stock = '', stockUnit = 'mM', target = '', targetUnit = 'mM') {
+            const list = document.getElementById('buffer-components-list');
+            const div = document.createElement('div');
+            // This class combination creates a responsive, single-line grid row with vertical alignment
+            div.className = 'component-row row g-2 mb-3 align-items-center'; 
+            div.innerHTML = `
+                <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="Component Name" value="${name}">
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text">Stock</span>
+                        <input type="number" class="form-control" placeholder="Value" value="${stock}">
+                        ${createUnitSelector('stockUnit', stockUnit)}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text">Target</span>
+                        <input type="number" class="form-control" placeholder="Value" value="${target}">
+                        ${createUnitSelector('targetUnit', targetUnit)}
+                    </div>
+                </div>
+                <div class="col-md-1 text-end">
+                    <button class="btn btn-outline-danger" onclick="this.closest('.component-row').remove()">X</button>
+                </div>
+            `;
+            list.appendChild(div);
+        }
+
+        function addPreInfiltrationComponent(name = '', value = '', unit = 'v/v', stock = '100', stockUnit = 'mM') {
+            const list = document.getElementById('pre-infiltration-list');
+            const div = document.createElement('div');
+            div.className = 'pre-infiltration-row mb-2';
+            div.innerHTML = `<div class="input-group"><input type="text" class="form-control" placeholder="Additive Name" value="${name}"><input type="number" class="form-control" placeholder="Value" value="${value}"><select class="form-select" onchange="toggleAdditiveInput(this)"><option value="v/v" ${unit === 'v/v' ? 'selected' : ''}>v/v %</option><option value="w/v" ${unit === 'w/v' ? 'selected' : ''}>w/v %</option><option value="mM" ${unit === 'mM' ? 'selected' : ''}>mM</option></select><button class="btn btn-outline-danger btn-sm" onclick="this.closest('.pre-infiltration-row').remove()">X</button></div><div class="input-group mt-1 stock-input" style="${unit === 'mM' ? 'display:flex;' : 'display:none;'}"><span class="input-group-text">Stock Conc.</span><input type="number" class="form-control" placeholder="Stock Value" value="${stock}"><span class="input-group-text">${stockUnit}</span></div>`;
+            list.appendChild(div);
+            toggleAdditiveInput(div.querySelector('select'));
+        }
+
+        function toggleAdditiveInput(selectElement) {
+            const stockInputDiv = selectElement.closest('.pre-infiltration-row').querySelector('.stock-input');
+            if (stockInputDiv) {
+                 stockInputDiv.style.display = selectElement.value === 'mM' ? 'flex' : 'none';
+            }
+        }
+
+        function addConstruct(name = '', targetOD = 0.5, stockOD = '') {
+            const list = document.getElementById('constructs-list');
+            const div = document.createElement('div');
+            div.className = 'input-group mb-2 construct-row';
+            div.innerHTML = `<span class="input-group-text">Name</span><input type="text" class="form-control" placeholder="Construct Name" value="${name}"><span class="input-group-text">Target OD</span><input type="number" class="form-control" placeholder="Target OD600" value="${targetOD}"><span class="input-group-text">Stock OD</span><input type="number" class="form-control" placeholder="Stock OD600" value="${stockOD}"><button class="btn btn-outline-danger btn-sm" onclick="this.parentElement.remove()">X</button>`;
+            list.appendChild(div);
+        }
+        
+        function normalizeTo_mM(value, unit) {
+            switch (unit) {
+                case 'M': return value * 1000;
+                case 'uM': return value / 1000;
+                case 'mM':
+                default: return value;
+            }
+        }
+
+        function calculateMass() {
+            const componentName = document.getElementById('mw-component-name').value || 'your component';
+            const mw = parseFloat(document.getElementById('mw-value').value);
+            const targetConc = parseFloat(document.getElementById('mw-target-conc').value);
+            const targetConcUnit = document.getElementById('mw-target-conc-unit').value;
+            const finalVol = parseFloat(document.getElementById('mw-final-vol').value);
+            const finalVolUnit = document.getElementById('mw-final-vol-unit').value;
+            const resultDiv = document.getElementById('stock-calculator-result');
+            const addButton = document.getElementById('add-from-modal-btn'); // Get the new button
+
+            if (isNaN(mw) || isNaN(targetConc) || isNaN(finalVol) || mw <= 0 || targetConc <= 0 || finalVol <= 0) {
+                resultDiv.className = 'alert alert-danger mt-3';
+                resultDiv.innerText = 'Please enter valid, positive numbers for all fields.';
+                resultDiv.style.display = 'block';
+                addButton.disabled = true; // Ensure button is disabled on error
+                return;
+            }
+            
+            const concentration_mol_L = normalizeTo_mM(targetConc, targetConcUnit) / 1000;
+            const volume_L = finalVolUnit === 'L' ? finalVol : finalVol / 1000;
+
+            const mass_g = concentration_mol_L * volume_L * mw;
+            
+            let resultText = '';
+            if (mass_g < 1) {
+                resultText = `Dissolve <strong>${(mass_g * 1000).toFixed(3)} mg</strong> of ${componentName}`;
+            } else {
+                resultText = `Dissolve <strong>${mass_g.toFixed(3)} g</strong> of ${componentName}`;
+            }
+            
+            resultDiv.className = 'alert alert-success mt-3';
+            resultDiv.innerHTML = `${resultText} in solvent and bring the final volume to <strong>${finalVol} ${finalVolUnit}</strong>.`;
+            resultDiv.style.display = 'block';
+            addButton.disabled = false; // Enable the button on successful calculation
+        }
+
+        function calculate() {
+            let totalVolumeVal = parseFloat(document.getElementById('totalVolume').value);
+            if (isNaN(totalVolumeVal) || totalVolumeVal <= 0) {
+                alert('Please enter a valid Total Final Volume.');
+                return;
+            }
+            const totalVolumeUnit = document.getElementById('totalVolumeUnit').value;
+            const V_total_mL = totalVolumeUnit === 'L' ? totalVolumeVal * 1000 : totalVolumeVal;
+
+
+            const constructs = Array.from(document.querySelectorAll('.construct-row')).map(div => ({
+                name: div.querySelectorAll('input')[0].value,
+                targetOD: parseFloat(div.querySelectorAll('input')[1].value),
+                currentOD: parseFloat(div.querySelectorAll('input')[2].value)
+            })).filter(c => c.name && !isNaN(c.currentOD) && c.currentOD > 0);
+
+            if (constructs.length === 0) {
+                alert('Please add at least one construct with a valid Name and Stock OD600.');
+                return;
+            }
+
+            const V_per_construct_mL = V_total_mL / constructs.length;
+
+            const bufferComponents = Array.from(document.querySelectorAll('.component-row')).map(row => {
+                const inputs = row.querySelectorAll('input');
+                const selects = row.querySelectorAll('select');
+                return {
+                    name: inputs[0].value,
+                    stock: parseFloat(inputs[1].value),
+                    stockUnit: selects[0].value,
+                    target: parseFloat(inputs[2].value),
+                    targetUnit: selects[1].value
+                };
+            });
+
+            const phDetails = {
+                target: document.getElementById('targetPh').value,
+                acidName: document.getElementById('acidName').value,
+                acidStock: document.getElementById('acidStock').value, // Assuming M
+                baseName: document.getElementById('baseName').value,
+                baseStock: document.getElementById('baseStock').value // Assuming M
+            };
+
+            const preInfiltrationComponents = Array.from(document.querySelectorAll('.pre-infiltration-row')).map(row => ({
+                name: row.querySelector('input[placeholder="Additive Name"]').value,
+                value: parseFloat(row.querySelector('input[placeholder="Value"]').value),
+                unit: row.querySelector('select').value,
+                stock: parseFloat(row.querySelector('input[placeholder="Stock Value"]').value)
+            }));
+
+            // MODIFIED: Hide placeholder, show results card
+            document.getElementById('results-placeholder').style.display = 'none';
+            document.getElementById('results-output').innerHTML = generateResultsHTML(V_total_mL, V_per_construct_mL, bufferComponents, preInfiltrationComponents, constructs, phDetails);
+            document.getElementById('batch-date').innerText = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('results-card').style.display = 'block';
+        }
+
+        function addComponentFromModal() {
+            const name = document.getElementById('mw-component-name').value;
+            const stockConc = document.getElementById('mw-target-conc').value;
+            const stockUnit = document.getElementById('mw-target-conc-unit').value;
+
+            if (name && stockConc) {
+                // Add the new component to the main list, leaving target values empty for the user to fill.
+                addBufferComponent(name, stockConc, stockUnit, '', 'mM');
+                
+                // Get the Bootstrap modal instance and hide it
+                const modalInstance = bootstrap.Modal.getInstance(document.getElementById('stockCalculatorModal'));
+                modalInstance.hide();
+            } else {
+                alert('Component Name and Target Concentration are required.');
+            }
+        }
+
+        function generateResultsHTML(V_total_mL, V_per_construct_mL, bufferComponents, preInfiltrationComponents, constructs, phDetails) {
+            let allTablesHTML = `<div class="summary-header mb-3">Preparing a total of <strong>${(V_total_mL/1000).toFixed(2)} L</strong>. Make <strong>${constructs.length}</strong> batch(es) of <strong>${(V_per_construct_mL/1000).toFixed(2)} L</strong> each.</div>`;
+
+            constructs.forEach((c, index) => {
+                let totalStockVolume = 0;
+                const V_construct = (c.targetOD * V_total_mL) / c.currentOD;
+
+                let bufferTable = `<h4 class="mt-4 ${index > 0 ? 'pt-3 border-top' : ''}">Infiltration Mix for: ${c.name}</h4>
+                <table class="table table-bordered table-striped results-table">
+                <thead class="table-light"><tr><th>Step 1: Prepare Infiltration Buffer</th><th style="width: 25%;" class="text-end">Volume</th></tr></thead><tbody>`;
+
+                bufferComponents.forEach(comp => {
+                    const stock_mM = normalizeTo_mM(comp.stock, comp.stockUnit);
+                    const target_mM = normalizeTo_mM(comp.target, comp.targetUnit);
+                    const V_stock = (target_mM * V_per_construct_mL) / stock_mM;
+                    bufferTable += `<tr><td>${comp.name} (from ${comp.stock} ${comp.stockUnit})</td><td class="text-end">${V_stock.toFixed(2)} mL</td></tr>`;
+                    totalStockVolume += V_stock;
+                });
+                
+                const V_water = V_per_construct_mL - totalStockVolume - V_construct;
+
+                bufferTable += `<tr><td>Agrobacterium Culture (${c.name}, Stock OD=${c.currentOD.toFixed(2)})</td><td class="text-end">${V_construct.toFixed(2)} mL</td></tr>`;
+
+                if (V_water < 0) {
+                    bufferTable += `<tr class="table-danger"><td colspan="2" class="fw-bold">Error: Volume of stocks and culture exceeds target volume. Negative water volume: ${V_water.toFixed(2)} mL.</td></tr>`;
+                } else {
+                    bufferTable += `<tr><td>ddH₂O</td><td class="text-end">${V_water.toFixed(2)} mL</td></tr>`;
+                }
+                bufferTable += `<tr class="table-group-divider"><td class="fw-bold">Total Volume per Construct</td><td class="fw-bold text-end">${V_per_construct_mL.toFixed(2)} mL</td></tr></tbody></table>`;
+
+                let phTable = `<table class="table table-bordered table-striped results-table">
+                    <thead class="table-light"><tr><th>Step 2: Adjust pH to ${phDetails.target}</th><th style="width: 25%;" class="text-end">Volume</th></tr></thead><tbody>
+                    <tr><td>Acid Addition (${phDetails.acidName}, from ${phDetails.acidStock} M stock)</td><td class="text-end"><span contenteditable="true" style="display: inline-block; width: 70px; border-bottom: 1px dotted #000; text-align: right; padding-right: 2px;"></span> mL</td></tr>
+                    <tr><td>Base Addition (${phDetails.baseName}, from ${phDetails.baseStock} M stock)</td><td class="text-end"><span contenteditable="true" style="display: inline-block; width: 70px; border-bottom: 1px dotted #000; text-align: right; padding-right: 2px;"></span> mL</td></tr>
+                    </tbody></table>`;
+
+                let incubationNote = `<p class="mt-2"><em>Incubate mixture for 1-2 hours in the dark.</em></p>`;
+                allTablesHTML += bufferTable + phTable + incubationNote;
+            });
+
+            let additivesTable = '';
+            if (preInfiltrationComponents.some(p => p.value > 0)) {
+                const solutionWord = constructs.length > 1 ? 'solutions' : 'solution';
+                const componentWord = preInfiltrationComponents.length > 1 ? 'components' : 'component';
+                additivesTable = `<h4 class="mt-4 pt-3 border-top">Step 3: Combine & Add Final Additives</h4>
+                <p class="mb-2">Combine the <strong>${constructs.length}</strong> infiltration ${solutionWord} prepared above and add the final ${componentWord} and mix well.</p>
+                <table class="table table-bordered table-striped results-table">
+                <thead class="table-light"><tr><th>Additive</th><th style="width: 35%;" class="text-end">Amount for ${V_total_mL.toFixed(2)} mL total</th></tr></thead><tbody>`;
+
+                preInfiltrationComponents.forEach(p => {
+                    let Amount = '';
+                    switch (p.unit) {
+                        case 'v/v': Amount = `${((p.value / 100) * V_total_mL).toFixed(3)} mL`; break;
+                        case 'w/v': Amount = `${((p.value / 100) * V_total_mL).toFixed(3)} g`; break;
+                        case 'mM':
+                            if (isNaN(p.stock) || p.stock <= 0) Amount = `<span class="text-danger">Invalid Stock</span>`;
+                            else Amount = `${((p.value * V_total_mL) / p.stock).toFixed(3)} mL`;
+                            break;
+                    }
+                    additivesTable += `<tr><td>${p.name} (Target: ${p.value} ${p.unit === 'mM' ? 'mM' : p.unit + ' %'})</td><td class="text-end">${Amount}</td></tr>`;
+                });
+                additivesTable += `</tbody></table>`;
+            }
+
+            const printFooter = `<div class="text-center text-muted mt-5" style="font-size: 0.8rem;"><hr><p class="mb-0">Generated by the Agro-Infiltration Buffer Calculator v1.0</p><a href="https://mcdonald-nandi.ech.ucdavis.edu">mcdonald-nandi.ech.ucdavis.edu</a></div>`;
+            return allTablesHTML + additivesTable + printFooter;
+        }
+
+       function saveParamsToCSV() {
+            const csvRows = [];
+            const header = ['type', 'param1', 'param2', 'param3', 'param4', 'param5', 'param6'];
+            csvRows.push(header.join(','));
+
+            csvRows.push(['global', document.getElementById('totalVolume').value, document.getElementById('totalVolumeUnit').value].join(','));
+
+            csvRows.push(['ph', document.getElementById('targetPh').value, document.getElementById('acidName').value, document.getElementById('acidStock').value, document.getElementById('baseName').value, document.getElementById('baseStock').value].join(','));
+
+            document.querySelectorAll('#buffer-components-list .component-row').forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                const selects = row.querySelectorAll('select');
+                csvRows.push(['buffer', inputs[0].value, inputs[1].value, selects[0].value, inputs[2].value, selects[1].value].join(','));
+            });
+
+            document.querySelectorAll('#pre-infiltration-list .pre-infiltration-row').forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                csvRows.push(['additive', inputs[0].value, inputs[1].value, row.querySelector('select').value, inputs[2].value].join(','));
+            });
+
+            document.querySelectorAll('#constructs-list .construct-row').forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                csvRows.push(['construct', inputs[0].value, inputs[1].value, inputs[2].value].join(','));
+            });
+
+            const csvString = csvRows.join('\n');
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'agro-params.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function loadParamsFromCSV(event) {
+            const file = event.target.files[0];
+            if (!file) { return; }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const lines = e.target.result.split('\n').filter(line => line.trim() !== '');
+                    document.getElementById('buffer-components-list').innerHTML = '';
+                    document.getElementById('pre-infiltration-list').innerHTML = '';
+                    document.getElementById('constructs-list').innerHTML = '';
+
+                    lines.slice(1).forEach(line => {
+                        const cols = line.split(',');
+                        const type = cols[0];
+                        switch (type) {
+                            case 'global':
+                                document.getElementById('totalVolume').value = cols[1];
+                                document.getElementById('totalVolumeUnit').value = cols[2];
+                                break;
+                            case 'ph':
+                                document.getElementById('targetPh').value = cols[1];
+                                document.getElementById('acidName').value = cols[2];
+                                document.getElementById('acidStock').value = cols[3];
+                                document.getElementById('baseName').value = cols[4];
+                                document.getElementById('baseStock').value = cols[5];
+                                break;
+                            case 'buffer':
+                                addBufferComponent(cols[1], cols[2], cols[3], cols[4], cols[5]);
+                                break;
+                            case 'additive':
+                                addPreInfiltrationComponent(cols[1], cols[2], cols[3], cols[4]);
+                                break;
+                            case 'construct':
+                                addConstruct(cols[1], cols[2], cols[3]);
+								break;
+						}
+					});
+				} catch (error) {
+					console.error("Error parsing CSV file:", error);
+					alert("Failed to load parameters. Please ensure the CSV file is correctly formatted.");
+				} finally {
+					event.target.value = '';
+				}
+			};
+			reader.readAsText(file);
+		}
+	</script>
+
+</body>
+</html>
