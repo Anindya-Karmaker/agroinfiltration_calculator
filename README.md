@@ -20,7 +20,7 @@ A client-side web tool designed for plant biologists to streamline the process o
 
 ## How to Use
 
-1.  **Open the web page.**
+1.  **Open the web page at "https://anindya-karmaker.github.io/agroinfiltration_calculator".**
 2.  **Set Global Parameters:** Enter the total final volume you plan to make.
 3.  **Define Components:** Adjust the default buffer components or add new ones, specifying their stock and target concentrations.
 4.  **Add Constructs:** For each Agrobacterium culture, enter its name, the target OD₆₀₀ for infiltration, and the measured stock OD₆₀₀.
