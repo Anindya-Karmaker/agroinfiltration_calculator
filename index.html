@@ -15,6 +15,66 @@
             max-width: 1400px; /* Increased width for better layout */
         }
 
+        /* Start: Added Header Styles */
+        .app-header {
+            gap: 1.5rem;
+        }
+
+        .app-title {
+            font-size: 1.75rem; /* Smaller base font size for mobile */
+            font-weight: 600;
+        }
+        @media (min-width: 768px) {
+            .app-title {
+                font-size: 2.5rem; /* Larger font size for desktop */
+            }
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-logo {
+            height: 60px;
+            width: auto;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lab-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2a6db1; /* Professional blue */
+        }
+
+        .lab-subtext {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .app-title {
+            font-size: 28px;
+            color: #333;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .app-subtitle {
+            font-size: 16px;
+            color: #555;
+            margin: 5px 0 0 0;
+        }
+        /* End: Added Header Styles */
+
         .card-header {
             background-color: #00796b;
             color: white;
@@ -29,6 +89,11 @@
         .btn-custom:hover {
             background-color: #004d40;
             color: white;
+        }
+
+        .component-row .input-group-text {
+            min-width: 80px; 
+            justify-content: center;
         }
         
         .component-row .input-group input[type="number"] {
@@ -97,21 +162,21 @@
 <body>
 
     <div class="container my-5">
-        <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-center mb-4 no-print">
-            <!-- Changed mcdonald_nandi_logo.png to your new logo filename -->
-            <img src="logo.png" alt="Lab Logo" class="mb-3 mb-md-0" style="height: 80px;"> 
-            <div class="text-center flex-md-grow-1">
-                <!-- Made h1 smaller on mobile with responsive font size class -->
-                <h1 class="display-6 display-md-5">Agroinfiltration Buffer Calculator v1.0</h1>
-                <p class="lead mb-0">Generate a printable experimental data sheet for your infiltration experiments.</p>
+        <!-- MODIFIED: Header with responsive classes for better mobile layout -->
+        <div class="app-header no-print d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div class="header-left d-flex align-items-center text-center text-md-start mb-3 mb-md-0">
+                <img src="logo.png" alt="Lab Logo" class="header-logo me-3" style="height: 60px;">
             </div>
-            <!-- Removed the inflexible spacer div -->
+            <div class="header-right text-center text-md-end">
+                <h1 class="app-title">Agroinfiltration Buffer Calculator v1.0</h1>
+                <p class="app-subtitle lead">Generate a printable experimental data sheet for your infiltration experiments.</p>
+            </div>
         </div>
 
 
-        <div class="alert alert-info no-print text-justify">
-		    <strong>Protocol:</strong> Prepare the infiltration buffer and adjust pH. Add the required volume of Agrobacterium culture to the buffer. Incubate for 1-2 hours in the dark. Immediately before infiltration, combine the solutions based on number of constructs. Finally, add the pre-infiltration additives, mix well and perform vacuum/syringe infiltration.
-		</div>
+        <div class="alert alert-info no-print">
+            <strong>Protocol:</strong> Prepare the infiltration buffer and adjust pH. Add the required volume of Agrobacterium culture to the buffer. Incubate for 1-2 hours in the dark. Immediately before infiltration, combine the buffer/buffer's based on number of constructs. Finally, add the pre-infiltration additives, mix well and perform vacuum/syringe infiltration.
+        </div>
 
         <!-- Main Calculator Form -->
         <div class="row g-4">
@@ -345,32 +410,29 @@
             return `<select class="form-select flex-grow-0 w-auto">${options}</select>`;
         }
 
-        // MODIFIED: In-line delete button layout
         function addBufferComponent(name = '', stock = '', stockUnit = 'mM', target = '', targetUnit = 'mM') {
             const list = document.getElementById('buffer-components-list');
             const div = document.createElement('div');
-            // This class combination creates a responsive, single-line grid row with vertical alignment
-            div.className = 'component-row row g-2 mb-3 align-items-center'; 
+            // This class is the wrapper for a single component's inputs
+            div.className = 'component-row mb-4'; 
             div.innerHTML = `
-                <div class="col-md-3">
-                    <input type="text" class="form-control" placeholder="Component Name" value="${name}">
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <span class="input-group-text">Stock</span>
-                        <input type="number" class="form-control" placeholder="Value" value="${stock}">
-                        ${createUnitSelector('stockUnit', stockUnit)}
+                <div class="row g-2">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Component Name" value="${name}">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-outline-danger" onclick="this.closest('.component-row').remove()">X</button>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <span class="input-group-text">Target</span>
-                        <input type="number" class="form-control" placeholder="Value" value="${target}">
-                        ${createUnitSelector('targetUnit', targetUnit)}
-                    </div>
+                <div class="input-group mt-2">
+                    <span class="input-group-text">Stock</span>
+                    <input type="number" class="form-control" placeholder="Value" value="${stock}">
+                    ${createUnitSelector('stockUnit', stockUnit)}
                 </div>
-                <div class="col-md-1 text-end">
-                    <button class="btn btn-outline-danger" onclick="this.closest('.component-row').remove()">X</button>
+                <div class="input-group mt-2">
+                    <span class="input-group-text">Target</span>
+                    <input type="number" class="form-control" placeholder="Value" value="${target}">
+                    ${createUnitSelector('targetUnit', targetUnit)}
                 </div>
             `;
             list.appendChild(div);
