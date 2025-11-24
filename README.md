@@ -1,9 +1,11 @@
-# Agro-Infiltration Buffer Calculator v1.0
+# Agro-Infiltration Buffer Calculator v1.5
 
 A client-side web tool designed for plant biologists to streamline the process of preparing agroinfiltration buffers and generating printable experimental data sheets. This calculator handles complex calculations for multiple buffer components, Agrobacterium cultures, and post-incubation additives, saving valuable time and reducing the potential for manual errors.
 
  
-<img width="1402" height="980" alt="image" src="https://github.com/user-attachments/assets/df7bdaa0-1f5c-4f5c-950b-86f92621aafc" />
+<img width="1596" height="1018" alt="image" src="https://github.com/user-attachments/assets/352b9f9c-8359-44d2-a64e-33fa13a84a36" />
+
+
 
 
 
@@ -17,6 +19,9 @@ A client-side web tool designed for plant biologists to streamline the process o
 -   **Printable Data Sheet:** Generates a clean, well-organized experimental data sheet that can be printed and taken to the lab bench.
 -   **Save & Load Parameters:** Export your entire setup to a `.csv` file to save a specific protocol, and load it back in a single click.
 -   **Integrated Stock Solution Calculator:** A handy modal to quickly calculate the mass of solute needed to prepare a stock solution, with an option to directly add it to the buffer recipe.
+
+<img width="496" height="376" alt="image" src="https://github.com/user-attachments/assets/af2f2b69-3c10-4692-889c-4073f4df02d1" />
+
 
 ## How to Use
 
