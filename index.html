@@ -4,36 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agro-Infiltration Buffer Calculator v1.0</title>
+    <title>Agro-Infiltration Buffer Calculator v1.5</title>
+    <!-- Keep Bootstrap for Grid System and Modal functionality -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* --- Styles ported from index.html --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            padding: 20px;
+            color: #333;
         }
 
-        .container {
-            max-width: 1400px; /* Increased width for better layout */
+        /* Main Container matching index.html */
+        .main-wrapper {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
         }
 
-        /* Start: Added Header Styles */
+        /* Header Styles matching index.html */
         .app-header {
-            gap: 1.5rem;
-        }
-
-        .app-title {
-            font-size: 1.75rem; /* Smaller base font size for mobile */
-            font-weight: 600;
-        }
-        @media (min-width: 768px) {
-            .app-title {
-                font-size: 2.5rem; /* Larger font size for desktop */
-            }
-        }
-
-        .header-left {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 15px;
+            text-align: center;
+            gap: 20px;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
         }
 
         .header-logo {
@@ -41,28 +49,8 @@
             width: auto;
         }
 
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .lab-name {
-            font-size: 20px;
-            font-weight: 600;
-            color: #2a6db1; /* Professional blue */
-        }
-
-        .lab-subtext {
-            font-size: 14px;
-            color: #6c757d;
-        }
-
-        .header-right {
-            text-align: right;
-        }
-
         .app-title {
-            font-size: 28px;
+            font-size: 24px;
             color: #333;
             margin: 0;
             font-weight: 600;
@@ -73,36 +61,118 @@
             color: #555;
             margin: 5px 0 0 0;
         }
-        /* End: Added Header Styles */
+
+        @media (min-width: 900px) {
+            .app-header {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+            .header-right {
+                text-align: right;
+            }
+            .app-title {
+                font-size: 28px;
+            }
+        }
+
+        /* Card/Panel Styling to match .control-group from index.html */
+        .card {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            box-shadow: none; /* Remove default bootstrap shadow */
+            margin-bottom: 20px;
+        }
 
         .card-header {
-            background-color: #00796b;
-            color: white;
-            font-weight: bold;
+            background: transparent;
+            border-bottom: 1px solid #ddd;
+            padding: 0 0 10px 0;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #555;
+            font-weight: 600;
         }
 
-        .btn-custom {
-            background-color: #00796b;
-            color: white;
+        .card-body {
+            padding: 0;
+        }
+        
+        .card-footer {
+            background: transparent;
+            border-top: 1px solid #ddd;
+            padding: 10px 0 0 0;
+            margin-top: 15px;
         }
 
-        .btn-custom:hover {
-            background-color: #004d40;
-            color: white;
+        /* Form Controls to match index.html */
+        input[type="number"], input[type="text"], .form-control, .form-select {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+            padding: 8px;
+        }
+        .form-select {
+            padding-right: 2.5rem !important; 
+            background-position: right 0.75rem center;
         }
 
+        .input-group-text {
+            background-color: #e9ecef;
+            border: 1px solid #ddd;
+            font-size: 13px;
+        }
+
+        /* Buttons matching index.html */
+        .btn-custom, .btn-primary, .btn-success {
+            background-color: #00796b !important;
+            border-color: #00796b !important;
+            color: white !important;
+            transition: background 0.3s;
+        }
+
+        .btn-custom:hover, .btn-primary:hover, .btn-success:hover {
+            background-color: #004d40 !important;
+            border-color: #004d40 !important;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d !important;
+            border-color: #6c757d !important;
+            color: white !important;
+        }
+
+        .btn-secondary:hover {
+            background-color: #545b62 !important;
+            border-color: #545b62 !important;
+        }
+
+        .btn-outline-danger {
+            color: #dc3545;
+            border-color: #dc3545;
+        }
+        
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-outline-secondary {
+            color: #6c757d;
+            border-color: #6c757d;
+        }
+        
+        .btn-outline-secondary:hover {
+             background-color: #6c757d;
+             color: white;
+        }
+
+        /* Specific Calculator Styling */
         .component-row .input-group-text {
             min-width: 80px; 
             justify-content: center;
-        }
-        
-        .component-row .input-group input[type="number"] {
-            min-width: 100px;
-        }
-        .component-row .form-control,
-        .component-row .input-group-text,
-        .component-row .form-select {
-            font-size: 0.9rem;
         }
         
         .component-row .form-control {
@@ -110,50 +180,89 @@
         }
 
         .summary-header {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 500;
-            padding: 0.75rem 1rem;
-            background-color: #e0f2f1;
-            border-radius: 0.25rem;
+            padding: 10px;
+            background: #e8f4f8; /* Status bar color from index.html */
+            border-radius: 4px;
+            color: #555;
+            border: 1px solid #ddd;
         }
         
         .utility-link { 
-            font-size: 0.8rem; 
+            font-size: 12px; 
             cursor: pointer; 
+            color: #00796b;
+            text-decoration: none;
+        }
+        .utility-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Results Table Styling to match index.html table styles */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+            background: white;
+        }
+        .results-table th, .results-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .results-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        /* Footer from index.html */
+        footer {
+            text-align: center;
+            color: #6c757d; 
+            margin-top: 40px;
+            padding-top: 20px;
+            font-size: 0.85rem;
+            border-top: 1px solid #ddd;
+        }
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+        footer a {
+            color: #00796b; 
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
         }
 
         /* Print-specific styles */
         @media print {
             body {
                 background-color: white;
+                padding: 0;
             }
-
+            .main-wrapper {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                max-width: 100%;
+            }
             .no-print {
                 display: none !important;
             }
-
-            .container {
-                max-width: 100%;
-                margin: 0;
-                padding: 0;
-            }
-
             .card {
                 border: none;
-                box-shadow: none;
+                background: white;
+                padding: 0;
             }
-
             #results-card {
                 display: block !important;
+                border: none;
             }
-            
             #results-output {
                 max-height: none !important;
                 overflow-y: visible !important;
-            }
-
-            a[href]:after {
-                content: none !important;
             }
         }
     </style>
@@ -161,32 +270,33 @@
 
 <body>
 
-    <div class="container my-5">
-        <!-- MODIFIED: Header with responsive classes for better mobile layout -->
-        <div class="app-header no-print d-flex flex-column flex-md-row justify-content-between align-items-center">
-            <div class="header-left d-flex align-items-center text-center text-md-start mb-3 mb-md-0">
-                <img src="logo.png" alt="Lab Logo" class="header-logo me-3" style="height: 60px;">
+    <div class="main-wrapper">
+        <!-- Header matching index.html structure -->
+        <div class="app-header no-print">
+            <div class="header-left">
+                <div class="header">
+                    <h1 class="app-title">Agroinfiltration Buffer Calculator v1.5</h1>
+                    <p class="app-subtitle">Generate a printable experimental data sheet for your infiltration experiments.</p>
+                </div>
             </div>
-            <div class="header-right text-center text-md-end">
-                <h1 class="app-title">Agroinfiltration Buffer Calculator v1.0</h1>
-                <p class="app-subtitle lead">Generate a printable experimental data sheet for your infiltration experiments.</p>
+            <div class="header-right">
+                <img src="logo.png" alt="Lab Logo" class="header-logo">
             </div>
         </div>
 
-
-        <div class="alert alert-info no-print">
+        <div class="alert alert-info no-print" style="background: #e8f4f8; border-color: #b8daff; color: #555; font-size: 13px;">
             <strong>Protocol:</strong> Prepare the infiltration buffer and adjust pH. Add the required volume of Agrobacterium culture to the buffer. Incubate for 1-2 hours in the dark. Immediately before infiltration, combine the buffer/buffer's based on number of constructs. Finally, add the pre-infiltration additives, mix well and perform vacuum/syringe infiltration.
         </div>
 
         <!-- Main Calculator Form -->
         <div class="row g-4">
-            <!-- Left Column: All Inputs -->
+            <!-- Left Column: All Inputs (Styled as control groups) -->
             <div class="col-lg-7 no-print">
                 <!-- Global Parameters Card -->
-                <div class="card shadow-sm mb-4">
+                <div class="card">
                     <div class="card-header">Step 1: Global Parameters</div>
                     <div class="card-body">
-                        <label for="totalVolume" class="form-label">Total Final Volume (for all constructs)</label>
+                        <label for="totalVolume" class="form-label" style="font-size:13px; color:#555;">Total Final Volume (for all constructs)</label>
                         <div class="input-group">
                             <input type="number" class="form-control" id="totalVolume" value="2">
                             <select class="form-select flex-grow-0 w-auto" id="totalVolumeUnit">
@@ -198,29 +308,29 @@
                 </div>
 
                 <!-- Buffer Components Card -->
-                <div class="card shadow-sm mb-4">
+                <div class="card">
                     <div class="card-header">Step 2: Infiltration Buffer Components</div>
                     <div class="card-body" id="buffer-components-list">
                         <!-- Dynamic buffer components will be added here -->
                     </div>
-                    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                    <div class="card-footer d-flex justify-content-between align-items-center">
                         <a class="utility-link" data-bs-toggle="modal" data-bs-target="#stockCalculatorModal">Need to make a stock solution?</a>
                         <button class="btn btn-sm btn-outline-secondary" onclick="addBufferComponent()">+ Add Buffer Component</button>
                     </div>
                 </div>
 
                 <!-- pH Adjustment Card -->
-                <div class="card shadow-sm mb-4">
+                <div class="card">
                     <div class="card-header">Step 3: pH Adjustment</div>
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="targetPh" class="form-label">Target pH</label>
+                            <label for="targetPh" class="form-label" style="font-size:13px; color:#555;">Target pH</label>
                             <input type="number" class="form-control" id="targetPh" value="5.6" step="0.1">
                         </div>
-                        <hr>
+                        <hr style="border-top: 1px solid #ddd;">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="acidName" class="form-label">Acid for Adjustment</label>
+                                <label for="acidName" class="form-label" style="font-size:13px; color:#555;">Acid for Adjustment</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="acidName" value="HCl">
                                     <input type="number" class="form-control" id="acidStock" value="1">
@@ -228,7 +338,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="baseName" class="form-label">Base for Adjustment</label>
+                                <label for="baseName" class="form-label" style="font-size:13px; color:#555;">Base for Adjustment</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="baseName" value="KOH">
                                     <input type="number" class="form-control" id="baseStock" value="1">
@@ -241,23 +351,23 @@
 
 
                 <!-- Pre-Infiltration Additives Card -->
-                <div class="card shadow-sm mb-4">
+                <div class="card">
                     <div class="card-header">Step 4: Pre-Infiltration Additives</div>
                     <div class="card-body" id="pre-infiltration-list">
                         <!-- Dynamic additives like Silwet will be added here -->
                     </div>
-                    <div class="card-footer bg-white text-center">
+                    <div class="card-footer text-center">
                         <button class="btn btn-sm btn-outline-secondary" onclick="addPreInfiltrationComponent()">+ Add Additive</button>
                     </div>
                 </div>
 
                  <!-- Constructs Card -->
-                <div class="card shadow-sm mb-4">
+                <div class="card">
                     <div class="card-header">Step 5: Agrobacterium Constructs</div>
                     <div class="card-body" id="constructs-list">
                         <!-- Dynamic constructs will be added here -->
                     </div>
-                    <div class="card-footer bg-white text-center">
+                    <div class="card-footer text-center">
                         <button class="btn btn-sm btn-outline-secondary" onclick="addConstruct()">+ Add Construct</button>
                     </div>
                 </div>
@@ -265,16 +375,16 @@
 
             <!-- Right Column: Actions & Results -->
             <div class="col-lg-5">
-                <!-- MODIFIED: Actions Card moved here -->
-                <div class="card shadow-sm mb-4 no-print">
+                <!-- Actions Card -->
+                <div class="card no-print">
                     <div class="card-header">Generate & Manage</div>
                     <div class="card-body">
                         <div class="d-grid gap-2">
                             <button class="btn btn-custom btn-lg" onclick="calculate()">Generate Experimental Data Sheet</button>
-                            <hr>
-                            <div class="btn-group">
+                            <hr style="border-top: 1px solid #ddd;">
+                            <div class="btn-group w-100">
                                 <button class="btn btn-secondary" onclick="saveParamsToCSV()">Save Parameters</button>
-                                <label class="btn btn-secondary">
+                                <label class="btn btn-secondary" style="cursor: pointer; margin-bottom: 0;">
                                     Load Parameters <input type="file" id="csv-upload" accept=".csv" onchange="loadParamsFromCSV(event)" hidden>
                                 </label>
                             </div>
@@ -282,27 +392,28 @@
                     </div>
                 </div>
 
-                <!-- MODIFIED: Added placeholder for results -->
+                <!-- Placeholder for results -->
                 <div id="results-placeholder" class="no-print">
-                    <div class="alert alert-success text-center">
-                        <h5 class="alert-heading">Ready to Calculate?</h5>
-                        <p class="mb-0">Click <strong>Generate Experimental Data Sheet</strong> to view your protocol here. Use 'Save Parameters' to export your current setup, or 'Load Parameters' to import a previously saved configuration.</p>
+                    <div class="alert text-center" style="background: #e8f4f8; border: 1px solid #ddd; color: #555;">
+                        <h5 class="alert-heading" style="font-size: 16px; font-weight: 600;">Ready to Calculate?</h5>
+                        <p class="mb-0" style="font-size: 13px;">Click <strong>Generate Experimental Data Sheet</strong> to view your protocol here. Use 'Save Parameters' to export your current setup, or 'Load Parameters' to import a previously saved configuration.</p>
                     </div>
                 </div>
 
                 <!-- Results Card (initially hidden) -->
-                <div class="card shadow-sm sticky-top" id="results-card" style="display: none; top: 1rem;">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="card shadow-sm sticky-top" id="results-card" style="display: none; top: 1rem; border: 1px solid #ddd; border-radius: 4px; overflow: hidden;">
+                    <!-- Only show card frame content if not printing, or style specifically for print -->
+                    <div class="card-header d-flex justify-content-between align-items-center" style="background: #00796b; color: white; padding: 10px 20px; border-bottom: none;">
                         <span>Experimental Data Sheet</span>
                         <span id="batch-date" class="fs-6 fw-normal"></span>
                     </div>
-                    <div class="card-body">
-                        <div id="results-output" class="table-responsive" style="max-height: 80vh; overflow-y: auto; padding-right: 10px;">
+                    <div class="card-body" style="background: white; padding: 20px;">
+                        <div id="results-output" class="table-responsive">
                             <!-- Results table will be injected here -->
                         </div>
                         <div class="text-center mt-4 no-print">
                             <button class="btn btn-success" onclick="window.print()">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16" style="vertical-align: text-bottom; margin-right: 5px;">
                                     <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm5 8H6a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
                                     <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
                                 </svg>
@@ -313,6 +424,33 @@
                 </div>
             </div>
         </div>
+
+        <footer class="no-print">
+            <p>
+                <strong>Developed by:</strong> Anindya Karmaker, PhD Candidate, McDonald-Nandi Lab.
+            </p>
+            <p>
+                <strong>Source Code:</strong> 
+                <a href="https://github.com/Anindya-Karmaker/agroinfiltration_calculator" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: text-bottom; margin-right: 4px;">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    View on GitHub
+                </a>
+            </p>
+            <p>
+                <strong>Funding:</strong> The development of this tool was supported by the National Science Foundation Partnerships for Innovation (PFI) program under Grant No. 2016563.
+            </p>
+            <p>
+                <strong>License:</strong> All rights reserved. Unauthorized copy or distribution of this application is strictly prohibited.
+            </p>
+            <p>
+                <strong>Data Privacy:</strong> This is a client-side tool. No data is uploaded to, saved on, or transmitted to any server.
+            </p>
+            <p>
+                <strong>Disclaimer:</strong> This tool is for research and planning purposes only. The user is solely responsible for verifying all calculations and results before use.
+            </p>
+        </footer>
     </div>
 
     <!-- Stock Solution Calculator Modal -->
@@ -320,7 +458,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="stockCalculatorModalLabel">Stock Solution Calculator</h5>
+                    <h5 class="modal-title" id="stockCalculatorModalLabel" style="color: #333; font-weight: 600;">Stock Solution Calculator</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -350,7 +488,7 @@
                             <option value="L">L</option>
                         </select>
                     </div>
-                    <div id="stock-calculator-result" class="alert alert-success mt-3" style="display: none;"></div>
+                    <div id="stock-calculator-result" class="alert alert-success mt-3" style="display: none; background: #d4edda; color: #155724; border-color: #c3e6cb;"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -360,28 +498,6 @@
             </div>
         </div>
     </div>
-
-    <footer class="container text-center text-muted mt-5 mb-3 no-print">
-        <hr>
-        <p class="small">
-            <strong>Developed by:</strong> Anindya Karmaker, PhD Candidate, McDonald-Nandi Lab.<br>
-            
-            <!-- START: Added GitHub Link -->
-            <strong>Source Code:</strong> 
-            <a href="https://github.com/Anindya-Karmaker/agroinfiltration_calculator" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: text-bottom; margin-right: 4px;">
-                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-                </svg>
-                View on GitHub
-            </a><br>
-            <!-- END: Added GitHub Link -->
-
-            <strong>Funding:</strong> The development of this tool was supported by the National Science Foundation Partnerships for Innovation (PFI) program under Grant No. 2016563.<br>
-            <strong>License:</strong> All rights reserved. Unauthorized copy or distribution of this application is strictly prohibited.<br>
-            <strong>Data Privacy:</strong> This is a client-side tool. No data is uploaded to, saved on, or transmitted to any server.<br>
-            <strong>Disclaimer:</strong> This tool is for research and planning purposes only. The user is solely responsible for verifying all calculations and results before use.
-        </p>
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -445,15 +561,15 @@
             div.innerHTML = `
                 <div class="row g-2 align-items-end">
                     <div class="col-sm">
-                        <label class="form-label small">Additive</label>
+                        <label class="form-label small" style="color:#555;">Additive</label>
                         <input type="text" class="form-control" placeholder="Additive Name" value="${name}">
                     </div>
                     <div class="col-5 col-sm-3">
-                        <label class="form-label small">Value</label>
+                        <label class="form-label small" style="color:#555;">Value</label>
                         <input type="number" class="form-control" placeholder="Value" value="${value}">
                     </div>
                     <div class="col-5 col-sm-3">
-                        <label class="form-label small">Unit</label>
+                        <label class="form-label small" style="color:#555;">Unit</label>
                         <select class="form-select" onchange="toggleAdditiveInput(this)">
                             <option value="v/v" ${unit === 'v/v' ? 'selected' : ''}>v/v %</option>
                             <option value="w/v" ${unit === 'w/v' ? 'selected' : ''}>w/v %</option>
@@ -466,7 +582,7 @@
                 </div>
                 <div class="row g-2 mt-2 stock-input" style="${unit === 'mM' ? '' : 'display:none;'}">
                     <div class="col-sm-8 col-md-6">
-                        <label class="form-label small">Stock Conc.</label>
+                        <label class="form-label small" style="color:#555;">Stock Conc.</label>
                         <div class="input-group">
                             <input type="number" class="form-control" placeholder="Stock Value" value="${stock}">
                             <span class="input-group-text">${stockUnit}</span>
@@ -491,15 +607,15 @@
             div.className = 'construct-row row g-2 mb-3 align-items-end'; 
             div.innerHTML = `
                 <div class="col-12 col-sm">
-                    <label class="form-label small">Name</label>
+                    <label class="form-label small" style="color:#555;">Name</label>
                     <input type="text" class="form-control" placeholder="Construct Name" value="${name}">
                 </div>
                 <div class="col-6 col-sm">
-                    <label class="form-label small">Target OD</label>
+                    <label class="form-label small" style="color:#555;">Target OD</label>
                     <input type="number" class="form-control" placeholder="e.g., 0.5" value="${targetOD}" step="0.1">
                 </div>
                 <div class="col-6 col-sm">
-                    <label class="form-label small">Stock OD</label>
+                    <label class="form-label small" style="color:#555;">Stock OD</label>
                     <input type="number" class="form-control" placeholder="e.g., 2.0" value="${stockOD}" step="0.1">
                 </div>
                 <div class="col-12 col-sm-auto">
@@ -635,9 +751,9 @@
                 let totalStockVolume = 0;
                 const V_construct = (c.targetOD * V_total_mL) / c.currentOD;
 
-                let bufferTable = `<h4 class="mt-4 ${index > 0 ? 'pt-3 border-top' : ''}">Infiltration Mix for: ${c.name}</h4>
-                <table class="table table-bordered table-striped results-table">
-                <thead class="table-light"><tr><th>Step 1: Prepare Infiltration Buffer</th><th style="width: 25%;" class="text-end">Volume</th></tr></thead><tbody>`;
+                let bufferTable = `<h4 class="mt-4 ${index > 0 ? 'pt-3 border-top' : ''}" style="color: #333; font-size: 16px; font-weight: 600;">Infiltration Mix for: ${c.name}</h4>
+                <table class="results-table">
+                <thead><tr><th>Step 1: Prepare Infiltration Buffer</th><th style="width: 25%;" class="text-end">Volume</th></tr></thead><tbody>`;
 
                 bufferComponents.forEach(comp => {
                     const stock_mM = normalizeTo_mM(comp.stock, comp.stockUnit);
@@ -652,19 +768,19 @@
                 bufferTable += `<tr><td>Agrobacterium Culture (${c.name}, Stock OD=${c.currentOD.toFixed(2)})</td><td class="text-end">${V_construct.toFixed(2)} mL</td></tr>`;
 
                 if (V_water < 0) {
-                    bufferTable += `<tr class="table-danger"><td colspan="2" class="fw-bold">Error: Volume of stocks and culture exceeds target volume. Negative water volume: ${V_water.toFixed(2)} mL.</td></tr>`;
+                    bufferTable += `<tr class="table-danger"><td colspan="2" class="fw-bold" style="color: #dc3545;">Error: Volume of stocks and culture exceeds target volume. Negative water volume: ${V_water.toFixed(2)} mL.</td></tr>`;
                 } else {
                     bufferTable += `<tr><td>ddH₂O</td><td class="text-end">${V_water.toFixed(2)} mL</td></tr>`;
                 }
-                bufferTable += `<tr class="table-group-divider"><td class="fw-bold">Total Volume per Construct</td><td class="fw-bold text-end">${V_per_construct_mL.toFixed(2)} mL</td></tr></tbody></table>`;
+                bufferTable += `<tr style="border-top: 2px solid #ddd;"><td class="fw-bold">Total Volume per Construct</td><td class="fw-bold text-end">${V_per_construct_mL.toFixed(2)} mL</td></tr></tbody></table>`;
 
-                let phTable = `<table class="table table-bordered table-striped results-table">
-                    <thead class="table-light"><tr><th>Step 2: Adjust pH to ${phDetails.target}</th><th style="width: 25%;" class="text-end">Volume</th></tr></thead><tbody>
+                let phTable = `<table class="results-table">
+                    <thead><tr><th>Step 2: Adjust pH to ${phDetails.target}</th><th style="width: 25%;" class="text-end">Volume</th></tr></thead><tbody>
                     <tr><td>Acid Addition (${phDetails.acidName}, from ${phDetails.acidStock} M stock)</td><td class="text-end"><span contenteditable="true" style="display: inline-block; width: 70px; border-bottom: 1px dotted #000; text-align: right; padding-right: 2px;"></span> mL</td></tr>
                     <tr><td>Base Addition (${phDetails.baseName}, from ${phDetails.baseStock} M stock)</td><td class="text-end"><span contenteditable="true" style="display: inline-block; width: 70px; border-bottom: 1px dotted #000; text-align: right; padding-right: 2px;"></span> mL</td></tr>
                     </tbody></table>`;
 
-                let incubationNote = `<p class="mt-2"><em>Incubate mixture for 1-2 hours in the dark.</em></p>`;
+                let incubationNote = `<p class="mt-2" style="font-size: 13px; color: #666;"><em>Incubate mixture for 1-2 hours in the dark.</em></p>`;
                 allTablesHTML += bufferTable + phTable + incubationNote;
             });
 
@@ -672,10 +788,10 @@
             if (preInfiltrationComponents.some(p => p.value > 0)) {
                 const solutionWord = constructs.length > 1 ? 'solutions' : 'solution';
                 const componentWord = preInfiltrationComponents.length > 1 ? 'components' : 'component';
-                additivesTable = `<h4 class="mt-4 pt-3 border-top">Step 3: Combine & Add Final Additives</h4>
-                <p class="mb-2">Combine the <strong>${constructs.length}</strong> infiltration ${solutionWord} prepared above and add the final ${componentWord} and mix well.</p>
-                <table class="table table-bordered table-striped results-table">
-                <thead class="table-light"><tr><th>Additive</th><th style="width: 35%;" class="text-end">Amount for ${V_total_mL.toFixed(2)} mL total</th></tr></thead><tbody>`;
+                additivesTable = `<h4 class="mt-4 pt-3 border-top" style="color: #333; font-size: 16px; font-weight: 600;">Step 3: Combine & Add Final Additives</h4>
+                <p class="mb-2" style="font-size: 13px; color: #666;"><em>Combine the <strong>${constructs.length}</strong> infiltration ${solutionWord} prepared above and add the final ${componentWord} and mix well.</em></p>
+                <table class="results-table">
+                <thead><tr><th>Additive</th><th style="width: 35%;" class="text-end">Amount for ${V_total_mL.toFixed(2)} mL total</th></tr></thead><tbody>`;
 
                 preInfiltrationComponents.forEach(p => {
                     let Amount = '';
@@ -692,7 +808,7 @@
                 additivesTable += `</tbody></table>`;
             }
 
-            const printFooter = `<div class="text-center text-muted mt-5" style="font-size: 0.8rem;"><hr><p class="mb-0">Generated by the Agro-Infiltration Buffer Calculator v1.0</p><a href="https://mcdonald-nandi.ech.ucdavis.edu">mcdonald-nandi.ech.ucdavis.edu</a></div>`;
+            const printFooter = `<div class="text-center text-muted mt-5" style="font-size: 0.8rem;"><hr><p class="mb-0">Generated by the Agro-Infiltration Buffer Calculator v1.5</p><a href="https://mcdonald-nandi.ech.ucdavis.edu">mcdonald-nandi.ech.ucdavis.edu</a></div>`;
             return allTablesHTML + additivesTable + printFooter;
         }
 
