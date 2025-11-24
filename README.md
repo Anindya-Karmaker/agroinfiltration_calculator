@@ -40,7 +40,9 @@ A client-side web tool designed for plant biologists to streamline the process o
 
 The tool is entirely client-side, meaning no data is ever sent to or stored on a server, ensuring data privacy.
 
-## Acknowledgements
+## License
+
+Developed by Anindya Karmaker. All rights reserved. Unauthorized copy or distribution of this application is strictly prohibited. For inquiries or feedback, please contact the [McDonald-Nandi Lab](https://mcdonald-nandi.ech.ucdavis.edu/).
 
 -   **Developed by:** Anindya Karmaker, PhD Candidate, McDonald-Nandi Lab.
 -   **Funding:** The development of this tool was supported by the National Science Foundation Partnerships for Innovation (PFI) program under Grant No. 2016563.
