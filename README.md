@@ -61,7 +61,7 @@ If you use this tool in your research, please cite it as follows:
   title = {Agro-Infiltration Buffer Calculator},
   year = {2025},
   organization = {McDonald-Nandi Lab, University of California, Davis},
-  url = {[https://mcdonald-nandi.ech.ucdavis.edu/agro-calculator/](https://anindya-karmaker.github.io/agroinfiltration_calculator/)},
+  url = {https://anindya-karmaker.github.io/agroinfiltration_calculator/},
   note = {v2.0}
 }
 
