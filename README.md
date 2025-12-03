@@ -1,11 +1,9 @@
-# Agro-Infiltration Buffer Calculator v1.5
+# Agro-Infiltration Buffer Calculator v2.0
 
 A client-side web tool designed for plant biologists to streamline the process of preparing agroinfiltration buffers and generating printable experimental data sheets. This calculator handles complex calculations for multiple buffer components, Agrobacterium cultures, and post-incubation additives, saving valuable time and reducing the potential for manual errors.
 
  
-<img width="1596" height="1018" alt="image" src="https://github.com/user-attachments/assets/352b9f9c-8359-44d2-a64e-33fa13a84a36" />
-
-
+<img width="1598" height="995" alt="image" src="https://github.com/user-attachments/assets/b4e79fd8-c19d-4f4f-871f-8bdc71e731e4" />
 
 
 
@@ -40,6 +38,23 @@ A client-side web tool designed for plant biologists to streamline the process o
 
 The tool is entirely client-side, meaning no data is ever sent to or stored on a server, ensuring data privacy.
 
+## 🔗 Citation
+
+If you use this tool in your research, please cite it as follows:
+
+**APA Format:**
+> Karmaker, A., McCormick, A., Nandi, S., & McDonald, K. (2025). *Agro-Infiltration Buffer Calculator* [Software]. McDonald-Nandi Lab, University of California, Davis. Available at https://anindya-karmaker.github.io/agroinfiltration_calculator/
+
+**BibTeX:**
+```bibtex
+@software{AgroBufferCalc2025,
+  author = {Karmaker, Anindya and McCormick, Alison and Nandi, Somen and McDonald, Karen},
+  title = {Agro-Infiltration Buffer Calculator},
+  year = {2025},
+  organization = {McDonald-Nandi Lab, University of California, Davis},
+  url = {[https://mcdonald-nandi.ech.ucdavis.edu/agro-calculator/](https://anindya-karmaker.github.io/agroinfiltration_calculator/)},
+  note = {v2.0}
+}
 ## License
 
 Developed by Anindya Karmaker. All rights reserved. Unauthorized copy or distribution of this application is strictly prohibited. For inquiries or feedback, please contact the [McDonald-Nandi Lab](https://mcdonald-nandi.ech.ucdavis.edu/).
