@@ -4,11 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agro-Infiltration Buffer Calculator v1.5</title>
-    <!-- Keep Bootstrap for Grid System and Modal functionality -->
+    
+    <title>Agro-Infiltration Buffer Calculator | Plant Transient Expression Tool</title>
+    <meta name="description" content="Free online calculator for Agrobacterium-mediated transient expression. Generate infiltration buffer recipes, calculate stock solutions, and print experimental data sheets for plant biology research.">
+    <meta name="keywords" content="Agroinfiltration, Agrobacterium tumefaciens, Transient Expression, Plant Biology, Buffer Calculator, Acetosyringone, MES Buffer, Lab Protocol, McDonald-Nandi Lab">
+    <meta name="author" content="Anindya Karmaker, McDonald-Nandi Lab">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://anindya-karmaker.github.io/agroinfiltration_calculator/"> 
+    <meta property="og:title" content="Agro-Infiltration Buffer Calculator">
+    <meta property="og:description" content="Generate precise Agrobacterium infiltration buffer recipes and experimental data sheets for plant research.">
+    <meta property="og:image" content="hhttps://anindya-karmaker.github.io/agroinfiltration_calculator/logo.png"> <!-- REPLACE with exact path to your logo -->
+
+    
+    <link rel="canonical" href="https://anindya-karmaker.github.io/agroinfiltration_calculator/"> 
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Agro-Infiltration Buffer Calculator",
+      "url": "https://anindya-karmaker.github.io/agroinfiltration_calculator/",
+      "description": "A web-based tool to calculate chemical components for Agrobacterium-infiltration buffers used in plant biology research.",
+      "applicationCategory": "ScientificTool",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Person",
+        "name": "Anindya Karmaker"
+      },
+      "maintainer": {
+        "@type": "Organization",
+        "name": "McDonald-Nandi Lab"
+      },
+      "featureList": "Buffer concentration calculation, Stock solution calculator, pH adjustment helper, Experimental data sheet generation"
+    }
+    </script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" href="logo.png">
+
     <style>
-        /* --- Styles ported from index.html --- */
         * {
             margin: 0;
             padding: 0;
@@ -22,7 +59,6 @@
             color: #333;
         }
 
-        /* Main Container matching index.html */
         .main-wrapper {
             max-width: 1600px;
             margin: 0 auto;
@@ -32,7 +68,6 @@
             padding: 20px;
         }
 
-        /* Header Styles matching index.html */
         .app-header {
             display: flex;
             flex-direction: column;
@@ -76,13 +111,12 @@
             }
         }
 
-        /* Card/Panel Styling to match .control-group from index.html */
         .card {
             background: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 4px;
             padding: 15px;
-            box-shadow: none; /* Remove default bootstrap shadow */
+            box-shadow: none; 
             margin-bottom: 20px;
         }
 
@@ -107,7 +141,6 @@
             margin-top: 15px;
         }
 
-        /* Form Controls to match index.html */
         input[type="number"], input[type="text"], .form-control, .form-select {
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -125,7 +158,6 @@
             font-size: 13px;
         }
 
-        /* Buttons matching index.html */
         .btn-custom, .btn-primary, .btn-success {
             background-color: #00796b !important;
             border-color: #00796b !important;
@@ -169,7 +201,6 @@
              color: white;
         }
 
-        /* Specific Calculator Styling */
         .component-row .input-group-text {
             min-width: 80px; 
             justify-content: center;
@@ -183,7 +214,7 @@
             font-size: 1.1rem;
             font-weight: 500;
             padding: 10px;
-            background: #e8f4f8; /* Status bar color from index.html */
+            background: #e8f4f8; 
             border-radius: 4px;
             color: #555;
             border: 1px solid #ddd;
@@ -199,7 +230,6 @@
             text-decoration: underline;
         }
 
-        /* Results Table Styling to match index.html table styles */
         .results-table {
             width: 100%;
             border-collapse: collapse;
@@ -216,7 +246,6 @@
             font-weight: 600;
         }
 
-        /* Footer from index.html */
         footer {
             text-align: center;
             color: #6c757d; 
@@ -236,7 +265,6 @@
             text-decoration: underline;
         }
 
-        /* Print-specific styles */
         @media print {
             body {
                 background-color: white;
@@ -268,14 +296,14 @@
     </style>
 </head>
 
+
 <body>
 
     <div class="main-wrapper">
-        <!-- Header matching index.html structure -->
         <div class="app-header no-print">
             <div class="header-left">
                 <div class="header">
-                    <h1 class="app-title">Agroinfiltration Buffer Calculator v1.5</h1>
+                    <h1 class="app-title">Agroinfiltration Buffer Calculator v2.0</h1>
                     <p class="app-subtitle">Generate a printable experimental data sheet for your infiltration experiments.</p>
                 </div>
             </div>
@@ -288,11 +316,8 @@
             <strong>Protocol:</strong> Prepare the infiltration buffer and adjust pH. Add the required volume of Agrobacterium culture to the buffer. Incubate for 1-2 hours in the dark. Immediately before infiltration, combine the buffer/buffer's based on number of constructs. Finally, add the pre-infiltration additives, mix well and perform vacuum/syringe infiltration.
         </div>
 
-        <!-- Main Calculator Form -->
         <div class="row g-4">
-            <!-- Left Column: All Inputs (Styled as control groups) -->
             <div class="col-lg-7 no-print">
-                <!-- Global Parameters Card -->
                 <div class="card">
                     <div class="card-header">Step 1: Global Parameters</div>
                     <div class="card-body">
@@ -307,11 +332,9 @@
                     </div>
                 </div>
 
-                <!-- Buffer Components Card -->
                 <div class="card">
                     <div class="card-header">Step 2: Infiltration Buffer Components</div>
                     <div class="card-body" id="buffer-components-list">
-                        <!-- Dynamic buffer components will be added here -->
                     </div>
                     <div class="card-footer d-flex justify-content-between align-items-center">
                         <a class="utility-link" data-bs-toggle="modal" data-bs-target="#stockCalculatorModal">Need to make a stock solution?</a>
@@ -319,7 +342,6 @@
                     </div>
                 </div>
 
-                <!-- pH Adjustment Card -->
                 <div class="card">
                     <div class="card-header">Step 3: pH Adjustment</div>
                     <div class="card-body">
@@ -377,7 +399,7 @@
             <div class="col-lg-5">
                 <!-- Actions Card -->
                 <div class="card no-print">
-                    <div class="card-header">Generate & Manage</div>
+                    <div class="card-header">Generate & Load Data</div>
                     <div class="card-body">
                         <div class="d-grid gap-2">
                             <button class="btn btn-custom btn-lg" onclick="calculate()">Generate Experimental Data Sheet</button>
@@ -685,6 +707,11 @@
             addButton.disabled = false; // Enable the button on successful calculation
         }
 
+        window.savedConstructs = [];
+        window.savedBaseTotalVol = 0;
+        window.loadedResultAcid = 0;
+        window.loadedResultBase = 0;
+
         function calculate() {
             let totalVolumeVal = parseFloat(document.getElementById('totalVolume').value);
             if (isNaN(totalVolumeVal) || totalVolumeVal <= 0) {
@@ -693,7 +720,6 @@
             }
             const totalVolumeUnit = document.getElementById('totalVolumeUnit').value;
             const V_total_mL = totalVolumeUnit === 'L' ? totalVolumeVal * 1000 : totalVolumeVal;
-
 
             const constructs = Array.from(document.querySelectorAll('.construct-row')).map(div => ({
                 name: div.querySelectorAll('input')[0].value,
@@ -705,6 +731,13 @@
                 alert('Please add at least one construct with a valid Name and Stock OD600.');
                 return;
             }
+
+            constructs.forEach(c => {
+                c.calcCultureVol = (c.targetOD * V_total_mL) / c.currentOD;
+            });
+
+            window.savedConstructs = constructs;
+            window.savedBaseTotalVol = V_total_mL;
 
             const V_per_construct_mL = V_total_mL / constructs.length;
 
@@ -723,9 +756,9 @@
             const phDetails = {
                 target: document.getElementById('targetPh').value,
                 acidName: document.getElementById('acidName').value,
-                acidStock: document.getElementById('acidStock').value, // Assuming M
+                acidStock: document.getElementById('acidStock').value, 
                 baseName: document.getElementById('baseName').value,
-                baseStock: document.getElementById('baseStock').value // Assuming M
+                baseStock: document.getElementById('baseStock').value
             };
 
             const preInfiltrationComponents = Array.from(document.querySelectorAll('.pre-infiltration-row')).map(row => ({
@@ -735,11 +768,25 @@
                 stock: parseFloat(row.querySelector('input[placeholder="Stock Value"]').value)
             }));
 
-            // MODIFIED: Hide placeholder, show results card
+            // --- LOAD INITIAL ACID/BASE VOLUMES ---
+            let initAcid = 0;
+            let initBase = 0;
+
+            const existingInputs = document.querySelectorAll('.ph-adjust-input');
+            if (existingInputs.length >= 2) {
+                initAcid = parseFloat(existingInputs[0].value) || 0;
+                initBase = parseFloat(existingInputs[1].value) || 0;
+            } else if (window.loadedResultAcid > 0 || window.loadedResultBase > 0) {
+                initAcid = window.loadedResultAcid;
+                initBase = window.loadedResultBase;
+            }
+
             document.getElementById('results-placeholder').style.display = 'none';
-            document.getElementById('results-output').innerHTML = generateResultsHTML(V_total_mL, V_per_construct_mL, bufferComponents, preInfiltrationComponents, constructs, phDetails);
+            document.getElementById('results-output').innerHTML = generateResultsHTML(V_total_mL, V_per_construct_mL, bufferComponents, preInfiltrationComponents, constructs, phDetails, initAcid, initBase);
             document.getElementById('batch-date').innerText = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
             document.getElementById('results-card').style.display = 'block';
+            
+            updateFinalODs();
         }
 
         function addComponentFromModal() {
@@ -759,13 +806,17 @@
             }
         }
 
-        function generateResultsHTML(V_total_mL, V_per_construct_mL, bufferComponents, preInfiltrationComponents, constructs, phDetails) {
-            let allTablesHTML = `<div class="summary-header mb-3">Preparing a total of <strong>${(V_total_mL/1000).toFixed(2)} L</strong>. Make <strong>${constructs.length}</strong> batch(es) of <strong>${(V_per_construct_mL/1000).toFixed(2)} L</strong> each.</div>`;
+        function generateResultsHTML(V_total_mL, V_per_construct_mL, bufferComponents, preInfiltrationComponents, constructs, phDetails, initAcid, initBase) {
+            let allTablesHTML = `<div class="summary-header mb-3">
+                Preparing a Target Volume of <strong>${(V_total_mL/1000).toFixed(2)} L</strong>. 
+                Make <strong>${constructs.length}</strong> batch(es) of <strong>${(V_per_construct_mL/1000).toFixed(2)} L</strong> each.
+            </div>`;
 
             constructs.forEach((c, index) => {
                 let totalStockVolume = 0;
-                const V_construct = (c.targetOD * V_total_mL) / c.currentOD;
+                const V_construct = c.calcCultureVol; 
 
+                // --- STEP 1: Buffer Components ---
                 let bufferTable = `<h4 class="mt-4 ${index > 0 ? 'pt-3 border-top' : ''}" style="color: #333; font-size: 16px; font-weight: 600;">Infiltration Mix for: ${c.name}</h4>
                 <table class="results-table">
                 <thead><tr><th>Step 1: Prepare Infiltration Buffer</th><th style="width: 25%;" class="text-end">Volume</th></tr></thead><tbody>`;
@@ -780,54 +831,148 @@
                 
                 const V_water = V_per_construct_mL - totalStockVolume - V_construct;
 
-                bufferTable += `<tr><td>Agrobacterium Culture (${c.name}, Stock OD=${c.currentOD.toFixed(2)})</td><td class="text-end">${V_construct.toFixed(2)} mL</td></tr>`;
-
                 if (V_water < 0) {
                     bufferTable += `<tr class="table-danger"><td colspan="2" class="fw-bold" style="color: #dc3545;">Error: Volume of stocks and culture exceeds target volume. Negative water volume: ${V_water.toFixed(2)} mL.</td></tr>`;
                 } else {
                     bufferTable += `<tr><td>ddH₂O</td><td class="text-end">${V_water.toFixed(2)} mL</td></tr>`;
                 }
-                bufferTable += `<tr style="border-top: 2px solid #ddd;"><td class="fw-bold">Total Volume per Construct</td><td class="fw-bold text-end">${V_per_construct_mL.toFixed(2)} mL</td></tr></tbody></table>`;
+                
+                const V_buffer_only = V_per_construct_mL - V_construct;
+                bufferTable += `<tr style="border-top: 1px solid #ddd; color: #666; font-size: 0.9em;"><td class="fst-italic">Intermediate Volume (Buffer only)</td><td class="text-end fst-italic">${V_buffer_only.toFixed(2)} mL</td></tr></tbody></table>`;
 
+                // --- STEP 2: pH Adjustment (With Data Indices) ---
                 let phTable = `<table class="results-table">
-                    <thead><tr><th>Step 2: Adjust pH to ${phDetails.target}</th><th style="width: 25%;" class="text-end">Volume</th></tr></thead><tbody>
-                    <tr><td>Acid Addition (${phDetails.acidName}, from ${phDetails.acidStock} M stock)</td><td class="text-end"><span contenteditable="true" style="display: inline-block; width: 70px; border-bottom: 1px dotted #000; text-align: right; padding-right: 2px;"></span> mL</td></tr>
-                    <tr><td>Base Addition (${phDetails.baseName}, from ${phDetails.baseStock} M stock)</td><td class="text-end"><span contenteditable="true" style="display: inline-block; width: 70px; border-bottom: 1px dotted #000; text-align: right; padding-right: 2px;"></span> mL</td></tr>
+                    <thead><tr><th>Step 2: Adjust pH to ${phDetails.target}</th><th style="width: 25%;" class="text-end">Volume Added</th></tr></thead><tbody>
+                    <tr>
+                        <td>Acid Addition (${phDetails.acidName}, ${phDetails.acidStock} M)</td>
+                        <td class="text-end">
+                            <input type="number" class="form-control d-inline-block py-1 px-2 ph-adjust-input acid-input" 
+                                   data-index="${index}"
+                                   value="${initAcid}" step="0.1" min="0" style="width: 80px; font-size: 13px;" 
+                                   oninput="updateFinalODs()"> mL
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Base Addition (${phDetails.baseName}, ${phDetails.baseStock} M)</td>
+                        <td class="text-end">
+                            <input type="number" class="form-control d-inline-block py-1 px-2 ph-adjust-input base-input" 
+                                   data-index="${index}"
+                                   value="${initBase}" step="0.1" min="0" style="width: 80px; font-size: 13px;" 
+                                   oninput="updateFinalODs()"> mL
+                        </td>
+                    </tr>
+                    </tbody></table>`;
+
+                // --- STEP 3: Add Culture ---
+                // MODIFIED: Changed label to "Actual Volume" and added ID for dynamic updates
+                let cultureTable = `<table class="results-table">
+                    <thead><tr><th>Step 3: Add Agrobacterium Culture</th><th style="width: 25%;" class="text-end">Volume</th></tr></thead><tbody>
+                    <tr><td>Agrobacterium Culture (${c.name}, Stock OD=${c.currentOD.toFixed(2)})</td><td class="text-end">${V_construct.toFixed(2)} mL</td></tr>
+                    <tr style="border-top: 2px solid #ddd;">
+                        <td class="fw-bold">Actual Volume per Construct</td>
+                        <td class="fw-bold text-end"><span id="actual-vol-c-${index}">${V_per_construct_mL.toFixed(2)}</span> mL</td>
+                    </tr>
                     </tbody></table>`;
 
                 let incubationNote = `<p class="mt-2" style="font-size: 13px; color: #666;"><em>Incubate mixture for 1-2 hours in the dark.</em></p>`;
-                allTablesHTML += bufferTable + phTable + incubationNote;
+                
+                allTablesHTML += bufferTable + phTable + cultureTable + incubationNote;
             });
 
+            // --- STEP 4: Final Additives ---
             let additivesTable = '';
             if (preInfiltrationComponents.some(p => p.value > 0)) {
                 const solutionWord = constructs.length > 1 ? 'solutions' : 'solution';
                 const componentWord = preInfiltrationComponents.length > 1 ? 'components' : 'component';
-                additivesTable = `<h4 class="mt-4 pt-3 border-top" style="color: #333; font-size: 16px; font-weight: 600;">Step 3: Combine & Add Final Additives</h4>
-                <p class="mb-2" style="font-size: 13px; color: #666;"><em>Combine the <strong>${constructs.length}</strong> infiltration ${solutionWord} prepared above and add the final ${componentWord} and mix well.</em></p>
+                additivesTable = `<h4 class="mt-4 pt-3 border-top" style="color: #333; font-size: 16px; font-weight: 600;">Step 4: Combine & Add Final Additives</h4>
+                <p class="mb-2" style="font-size: 13px; color: #666;"><em>Combine the <strong>${constructs.length}</strong> infiltration ${solutionWord} prepared above and add the final ${componentWord}.</em></p>
                 <table class="results-table">
-                <thead><tr><th>Additive</th><th style="width: 35%;" class="text-end">Amount for ${V_total_mL.toFixed(2)} mL total</th></tr></thead><tbody>`;
+                <thead><tr><th>Additive</th><th style="width: 35%;" class="text-end">Amount for <span id="display-total-vol-step4">${V_total_mL.toFixed(2)}</span> mL (Actual Total)</th></tr></thead><tbody>`;
 
                 preInfiltrationComponents.forEach(p => {
                     let Amount = '';
-                    switch (p.unit) {
-                        case 'v/v': Amount = `${((p.value / 100) * V_total_mL).toFixed(3)} mL`; break;
-                        case 'w/v': Amount = `${((p.value / 100) * V_total_mL).toFixed(3)} g`; break;
-                        case 'mM':
-                            if (isNaN(p.stock) || p.stock <= 0) Amount = `<span class="text-danger">Invalid Stock</span>`;
-                            else Amount = `${((p.value * V_total_mL) / p.stock).toFixed(3)} mL`;
-                            break;
+                    let valueContent = '';
+                    if (p.unit === 'mM' && (isNaN(p.stock) || p.stock <= 0)) {
+                        valueContent = '<span class="text-danger">Invalid Stock</span>';
+                    } else {
+                        let factor = 0;
+                        let suffix = '';
+                        if(p.unit === 'v/v') { factor = p.value / 100; suffix = ' mL'; }
+                        else if(p.unit === 'w/v') { factor = p.value / 100; suffix = ' g'; }
+                        else if(p.unit === 'mM') { factor = p.value / p.stock; suffix = ' mL'; }
+                        
+                        valueContent = `<span class="dynamic-additive" data-factor="${factor}" data-suffix="${suffix}">${(factor * V_total_mL).toFixed(3)}${suffix}</span>`;
                     }
-                    additivesTable += `<tr><td>${p.name} (Target: ${p.value} ${p.unit === 'mM' ? 'mM' : p.unit + ' %'})</td><td class="text-end">${Amount}</td></tr>`;
+                    additivesTable += `<tr><td>${p.name} (Target: ${p.value} ${p.unit === 'mM' ? 'mM' : p.unit + ' %'})</td><td class="text-end">${valueContent}</td></tr>`;
                 });
                 additivesTable += `</tbody></table>`;
             }
 
-            const printFooter = `<div class="text-center text-muted mt-5" style="font-size: 0.8rem;"><hr><p class="mb-0">Generated by the Agro-Infiltration Buffer Calculator v1.5</p><a href="https://mcdonald-nandi.ech.ucdavis.edu">mcdonald-nandi.ech.ucdavis.edu</a></div>`;
-            return allTablesHTML + additivesTable + printFooter;
+            let finalStatsHTML = `<div id="final-stats-output" class="alert alert-info mt-3" style="border: 1px solid #bce8f1;"></div>`;
+
+            const printFooter = `<div class="text-center text-muted mt-5" style="font-size: 0.8rem;"><hr><p class="mb-0">Generated by the Agro-Infiltration Buffer Calculator v2.0</p><a href="https://mcdonald-nandi.ech.ucdavis.edu">mcdonald-nandi.ech.ucdavis.edu</a></div>`;
+            return allTablesHTML + additivesTable + finalStatsHTML + printFooter;
         }
 
-       function saveParamsToCSV() {
+        function updateFinalODs() {
+            let grandTotalActualVolume = 0;
+            // Base volume per batch (calculated from the initial total / count)
+            const V_base_per_construct = window.savedBaseTotalVol / window.savedConstructs.length;
+            
+            // 1. First Pass: Calculate Grand Total Volume
+            window.savedConstructs.forEach((c, index) => {
+                const acidInput = document.querySelector(`.acid-input[data-index="${index}"]`);
+                const baseInput = document.querySelector(`.base-input[data-index="${index}"]`);
+                
+                const acidVol = parseFloat(acidInput ? acidInput.value : 0) || 0;
+                const baseVol = parseFloat(baseInput ? baseInput.value : 0) || 0;
+                
+                // Actual volume for THIS specific batch
+                const actualConstructVol = V_base_per_construct + acidVol + baseVol;
+                
+                // Update the "Actual Volume" text in the individual tables (Step 3)
+                const volSpan = document.getElementById(`actual-vol-c-${index}`);
+                if(volSpan) volSpan.innerText = actualConstructVol.toFixed(2);
+
+                grandTotalActualVolume += actualConstructVol;
+            });
+
+            // 2. Update Step 4 "Total Volume" display
+            const step4VolDisplay = document.getElementById('display-total-vol-step4');
+            if(step4VolDisplay) step4VolDisplay.innerText = grandTotalActualVolume.toFixed(2);
+
+            // 3. Update Additive Amounts (recalculated for the Grand Total Volume)
+            document.querySelectorAll('.dynamic-additive').forEach(span => {
+                const factor = parseFloat(span.getAttribute('data-factor'));
+                const suffix = span.getAttribute('data-suffix');
+                if(!isNaN(factor)) {
+                    span.innerText = (factor * grandTotalActualVolume).toFixed(3) + suffix;
+                }
+            });
+
+            // 4. Generate Final Stats HTML (Displaying Post-Mixing ODs)
+            let finalStatsHTML = `<h5 style="font-size:15px; margin-bottom:10px; font-weight:600; color:#31708f;">Final Calculated Parameters (Post-Mixing)</h5>
+                                  <div class="mb-2" style="border-bottom:1px solid #ddd; padding-bottom:5px;">
+                                    <strong>Total Combined Volume:</strong> ${grandTotalActualVolume.toFixed(2)} mL
+                                  </div>
+                                  <p class="mb-1 small text-muted">Final OD₆₀₀ of each construct in the total mixture:</p>
+                                  <ul class="mb-0 ps-3">`;
+
+            window.savedConstructs.forEach(c => {
+                // Total OD Units = Volume of Culture * Stock OD
+                const totalODUnits = c.calcCultureVol * c.currentOD;
+                
+                // Final OD (Post-Mixing) = Total OD Units / Grand Total Volume
+                const finalOD = totalODUnits / grandTotalActualVolume;
+                
+                finalStatsHTML += `<li><strong>${c.name}:</strong> OD₆₀₀ = ${finalOD.toFixed(4)}</li>`;
+            });
+            finalStatsHTML += `</ul>`;
+
+            document.getElementById('final-stats-output').innerHTML = finalStatsHTML;
+        }
+
+        function saveParamsToCSV() {
             const csvRows = [];
             const header = ['type', 'param1', 'param2', 'param3', 'param4', 'param5', 'param6'];
             csvRows.push(header.join(','));
@@ -835,6 +980,16 @@
             csvRows.push(['global', document.getElementById('totalVolume').value, document.getElementById('totalVolumeUnit').value].join(','));
 
             csvRows.push(['ph', document.getElementById('targetPh').value, document.getElementById('acidName').value, document.getElementById('acidStock').value, document.getElementById('baseName').value, document.getElementById('baseStock').value].join(','));
+
+            // --- NEW: Save the Acid/Base Volumes from the Results (if they exist) ---
+            const phInputs = document.querySelectorAll('.ph-adjust-input');
+            let resAcid = 0, resBase = 0;
+            // We take the values from the first construct's table (assuming uniform buffer prep)
+            if (phInputs.length >= 2) {
+                resAcid = phInputs[0].value; 
+                resBase = phInputs[1].value;
+            }
+            csvRows.push(['result_vol', resAcid, resBase].join(','));
 
             document.querySelectorAll('#buffer-components-list .component-row').forEach(row => {
                 const inputs = row.querySelectorAll('input');
@@ -874,6 +1029,10 @@
                     document.getElementById('pre-infiltration-list').innerHTML = '';
                     document.getElementById('constructs-list').innerHTML = '';
 
+                    // Reset loaded results
+                    window.loadedResultAcid = 0;
+                    window.loadedResultBase = 0;
+
                     lines.slice(1).forEach(line => {
                         const cols = line.split(',');
                         const type = cols[0];
@@ -889,6 +1048,11 @@
                                 document.getElementById('baseName').value = cols[4];
                                 document.getElementById('baseStock').value = cols[5];
                                 break;
+                            case 'result_vol':
+                                // --- NEW: Load Result Volumes ---
+                                window.loadedResultAcid = parseFloat(cols[1]) || 0;
+                                window.loadedResultBase = parseFloat(cols[2]) || 0;
+                                break;
                             case 'buffer':
                                 addBufferComponent(cols[1], cols[2], cols[3], cols[4], cols[5]);
                                 break;
@@ -897,18 +1061,21 @@
                                 break;
                             case 'construct':
                                 addConstruct(cols[1], cols[2], cols[3]);
-								break;
-						}
-					});
-				} catch (error) {
-					console.error("Error parsing CSV file:", error);
-					alert("Failed to load parameters. Please ensure the CSV file is correctly formatted.");
-				} finally {
-					event.target.value = '';
-				}
-			};
-			reader.readAsText(file);
-		}
+                                break;
+                        }
+                    });
+                    
+                    // Automatically trigger calculation if we loaded valid data
+                    // Optional: calculate(); 
+                } catch (error) {
+                    console.error("Error parsing CSV file:", error);
+                    alert("Failed to load parameters. Please ensure the CSV file is correctly formatted.");
+                } finally {
+                    event.target.value = '';
+                }
+            };
+            reader.readAsText(file);
+        }
 	</script>
 
 </body>
