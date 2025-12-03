@@ -1,4 +1,4 @@
-# Agro-Infiltration Buffer Calculator v2.0
+# Agroinfiltration Buffer Calculator v2.0
 
 A client-side web tool designed for plant biologists to streamline the process of preparing agroinfiltration buffers and generating printable experimental data sheets. This calculator handles complex calculations for multiple buffer components, Agrobacterium cultures, and post-incubation additives, saving valuable time and reducing the potential for manual errors.
 
