@@ -52,13 +52,13 @@ Developed by Anindya Karmaker. All rights reserved. Unauthorized copy or distrib
 If you use this tool in your research, please cite it as follows:
 
 **APA Format:**
-> Karmaker, A., McCormick, A., Nandi, S., & McDonald, K. (2025). *Agro-Infiltration Buffer Calculator* [Software]. McDonald-Nandi Lab, University of California, Davis. Available at https://anindya-karmaker.github.io/agroinfiltration_calculator/
+> Karmaker, A., McCormick, A., Nandi, S., & McDonald, K. (2025). *Agroinfiltration Buffer Calculator* [Software]. McDonald-Nandi Lab, University of California, Davis. Available at https://anindya-karmaker.github.io/agroinfiltration_calculator/
 
 **BibTeX:**
 ```bibtex
 @software{AgroBufferCalc2025,
   author = {Karmaker, Anindya and McCormick, Alison and Nandi, Somen and McDonald, Karen},
-  title = {Agro-Infiltration Buffer Calculator},
+  title = {Agroinfiltration Buffer Calculator},
   year = {2025},
   organization = {McDonald-Nandi Lab, University of California, Davis},
   url = {https://anindya-karmaker.github.io/agroinfiltration_calculator/},
