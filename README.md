@@ -55,6 +55,8 @@ If you use this tool in your research, please cite it as follows:
   url = {[https://mcdonald-nandi.ech.ucdavis.edu/agro-calculator/](https://anindya-karmaker.github.io/agroinfiltration_calculator/)},
   note = {v2.0}
 }
+
+
 ## License
 
 Developed by Anindya Karmaker. All rights reserved. Unauthorized copy or distribution of this application is strictly prohibited. For inquiries or feedback, please contact the [McDonald-Nandi Lab](https://mcdonald-nandi.ech.ucdavis.edu/).
